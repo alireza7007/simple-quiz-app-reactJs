@@ -42,38 +42,38 @@ const [questions, setQuestion] = useState([
 }
 ])
 
-const [currentQuastion, setCurrentQuastion] = useState(1)
+const [currentQuastion, setCurrentQuastion] = useState(0)
 const [score, setScore] = useState(0)
-const [showScore, setShowScore] = useState(false)
+const [showScore, setShowScore] = useState(0)
 
-const quastionplase = questions[currentQuastion].map(quastion =>{
-return <><div className='question-count'>
-                <span>Question 1</span>/ 4
-                </div>
-                <div className='question-text'>{quastion}</div></>
- 
-})
-console.log(quastionplase);
+
+const handelCurentQuastion = (isCorrect)=>{
+  setCurrentQuastion(currentQuastion+1)
+  console.log(isCorrect);
+  if(isCorrect){
+    setScore(score+1)
+  }
+}
+// console.log(questions.map[currentQuastion]);
   return (
-    <div className='app'>
-                {/* next div is for showing user score */}
-                    {/* <div className='score-section'>
-                        You scored 0 out of 4
-                    </div> */}
-                    
-                        <div className='question-section'>
-                          {quastionplase}
-                            {/* <div className='question-count'>
-                                <span>Question 1</span>/ 4
-                            </div>
-                              <div className='question-text'>Where is Iran capital?</div> */}
-                        </div>
-                        <div className='answer-section'>
-                                <button>Tehran</button>
-                                <button>Tabriz</button>
-                                <button>Gorgan</button>
-                                <button>Shiraz</button>
-                        </div>
-            </div>
+    
+               
+                <div className='app'>
+                        {currentQuastion >= 4 ?<div className='score-section'>
+                        You scored {score} out of 4
+                    </div>
+                        :<> <div className='question-section'>
+                          <div className='question-count'>
+                              <span>Question {currentQuastion+1}</span>/ 4
+                          </div>
+                            <div className='question-text'>{questions[currentQuastion].questionText}</div>
+                      </div>
+                      
+                      <div className='answer-section'>
+                      {questions[currentQuastion].answerOptions.map(am => {
+                        return <button onClick={() => handelCurentQuastion(am.isCorrect)}>{am.answerText}</button>
+                      })}
+                      </div> </> }
+                    </div>
   )
 }
